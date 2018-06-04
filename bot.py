@@ -100,3 +100,32 @@ class Bot(object):
                              text=text
         )
         self.client.api_call("channels.invite", token=token, channel=channel, user=user_id)
+
+    def kick_user(self, user_id, channel, token):
+        """
+        Create and send an onboarding welcome message to new users. Save the
+        time stamp of this message on the message object for updating in the
+        future.
+
+        Parameters
+        ----------
+        team_id : str
+            id of the Slack team associated with the incoming event
+        user_id : str
+            id of the Slack user associated with the incoming event
+
+        """
+        # We'll use the message object's method to create the attachments that
+        # we'll want to add to our Slack message. This method will also save
+        # the attachments on the message object which we're accessing in the
+        # API call below through the message object's `attachments` attribute.
+        text = "NO! <@" + str(user_id) + ">"
+        self.client.api_call(
+                             "chat.postMessage",
+                             channel=channel,
+                             token=token,
+                             username=self.name,
+                             icon_emoji=self.emoji,
+                             text=text
+        )
+        self.client.api_call("channels.kick", token=token, channel=channel, user=user_id)

@@ -27,10 +27,10 @@ def _event_handler(event_type, slack_event):
         Response object with 200 - ok or 500 - No Event Handler error
 
     """
-    if event_type == "member_left_channel" and slack_event["event"]["channel"] == "C08AS1ARH":
+    if event_type == "member_joined_channel" and slack_event["event"]["channel"] == "CAZN0L401":
         try:
             user_id = slack_event["event"]["user"]
-            pyBot.bring_back_user(user_id, slack_event["event"]["channel"], slack_event["token"])
+            pyBot.kick_user(user_id, slack_event["event"]["channel"], slack_event["token"])
         except KeyError:
             pass
 
